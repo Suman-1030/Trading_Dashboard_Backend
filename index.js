@@ -29,8 +29,8 @@ app.get('/Analytics',(req,res)=>{
     losingTrades: 0,  
   
    
-    longestWinStreak: Math.floor(3 + Math.random() * 15), // 3–18 trades
-    longestLossStreak: Math.floor(1 + Math.random() * 8), // 1–8 trades
+    longestWinStreak: Math.floor(3 + Math.random() * 15), 
+    longestLossStreak: Math.floor(1 + Math.random() * 8), 
   
    
     sharpeRatio: (0.5 + Math.random() * 1.5).toFixed(2), 

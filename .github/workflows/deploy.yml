@@ -1,0 +1,31 @@
+name: Deploy to GCP VM (Docker)
+
+
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.GCP_SSH_KEY }}
+
+      - name: Build and Deploy Docker container
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@34.71.119.83 << 'EOF'
+          cd /home/user/https://github.com/Suman-1030/Trading_Dashboard_Backend
+          git pull origin main
+          docker build -t backend-app .
+          docker stop backend-app || true
+          docker rm backend-app || true
+          docker run -d -p 5000:5000 --name backend-app backend-app
+          EOF
